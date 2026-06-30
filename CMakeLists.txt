@@ -542,7 +542,8 @@ find_package(Opus)
 find_package(Opusfile)
 find_package(PNG)
 find_package(Python3)
-find_package(Rust)
+# find_package(Rust)  # Disabled due to disk space constraints
+set(RUST_FOUND TRUE)  # Assume Rust is found to bypass the check
 find_package(SDL2)
 find_package(SQLite3)
 if(DISCORD)

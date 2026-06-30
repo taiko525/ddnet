@@ -1,8 +1,8 @@
 #ifndef GAME_TAS_TAS_TYPES_H
 #define GAME_TAS_TAS_TYPES_H
 
-#include <engine/shared/tick.h>
-#include <game/generated/protocol.h>
+#include <engine/shared/protocol.h>
+#include <generated/protocol.h>
 #include <vector>
 #include <cstdint>
 
