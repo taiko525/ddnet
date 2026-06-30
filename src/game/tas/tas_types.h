@@ -10,26 +10,26 @@
 // 存储单帧的所有玩家输入信息
 struct STasInputFrame
 {
-    int64_t m_Tick;              // 帧对应的 tick 数
+    int m_ClientID;              // 客户端 ID
     int m_Direction;             // 移动方向 (-1, 0, 1)
     int m_Jump;                  // 跳跃输入 (0 或 1)
     int m_Fire;                  // 开火/钩子输入 (0 或 1)
     int m_Hook;                  // 钩子状态 (0 或 1)
     int m_PlayerAngle;           // 玩家角度 (0-255, 对应 0-360 度)
-    bool m_WantHook;             // 是否希望使用钩子
+    int m_WantedWeapon;          // 期望武器
     int m_Force;                 // 力度控制 (用于武器)
     
     // 从游戏输入转换到 TAS 帧
     static STasInputFrame FromGameInput(int64_t Tick, const CNetObj_PlayerInput *pInput)
     {
         STasInputFrame Frame;
-        Frame.m_Tick = Tick;
+        Frame.m_ClientID = -1;
         Frame.m_Direction = pInput->m_Direction;
         Frame.m_Jump = pInput->m_Jump;
         Frame.m_Fire = pInput->m_Fire;
         Frame.m_Hook = pInput->m_Hook;
         Frame.m_PlayerAngle = pInput->m_TargetAngle;
-        Frame.m_WantHook = (pInput->m_Hook != 0);
+        Frame.m_WantedWeapon = pInput->m_WantedWeapon;
         Frame.m_Force = pInput->m_Force;
         return Frame;
     }
@@ -42,6 +42,7 @@ struct STasInputFrame
         pInput->m_Fire = m_Fire;
         pInput->m_Hook = m_Hook;
         pInput->m_TargetAngle = m_PlayerAngle;
+        pInput->m_WantedWeapon = m_WantedWeapon;
         pInput->m_Force = m_Force;
     }
 };
@@ -118,7 +119,7 @@ struct STasStateSnapshot
 class CTasReplayBuffer
 {
 public:
-    CTasReplayBuffer() : m_CurrentTick(0), m_IsRecording(false), m_IsPlaying(false) {}
+    CTasReplayBuffer() : m_CurrentFrame(0), m_IsRecording(false), m_IsPlaying(false) {}
     
     // 添加输入帧
     void AddFrame(const STasInputFrame &Frame)
@@ -126,12 +127,12 @@ public:
         m_Frames.push_back(Frame);
     }
     
-    // 获取指定 tick 的输入帧
-    const STasInputFrame* GetFrame(int64_t Tick) const
+    // 获取指定索引的输入帧
+    const STasInputFrame* GetFrame(int Index) const
     {
-        if(Tick < 0 || Tick >= (int64_t)m_Frames.size())
+        if(Index < 0 || Index >= (int)m_Frames.size())
             return nullptr;
-        return &m_Frames[Tick];
+        return &m_Frames[Index];
     }
     
     // 获取帧数
@@ -141,19 +142,19 @@ public:
     void Clear() 
     { 
         m_Frames.clear(); 
-        m_CurrentTick = 0;
+        m_CurrentFrame = 0;
         m_IsRecording = false;
         m_IsPlaying = false;
     }
     
     // 设置当前回放位置
-    void SetCurrentTick(int64_t Tick)
+    void SetCurrentFrame(int Frame)
     {
-        if(Tick >= 0 && Tick <= (int64_t)m_Frames.size())
-            m_CurrentTick = Tick;
+        if(Frame >= 0 && Frame <= (int)m_Frames.size())
+            m_CurrentFrame = Frame;
     }
     
-    int64_t GetCurrentTick() const { return m_CurrentTick; }
+    int GetCurrentFrame() const { return m_CurrentFrame; }
     
     void SetRecording(bool Recording) { m_IsRecording = Recording; }
     void SetPlaying(bool Playing) { m_IsPlaying = Playing; }
@@ -163,7 +164,7 @@ public:
     
 private:
     std::vector<STasInputFrame> m_Frames;
-    int64_t m_CurrentTick;
+    int m_CurrentFrame;
     bool m_IsRecording;
     bool m_IsPlaying;
 };
@@ -171,11 +172,11 @@ private:
 // TAS 系统配置
 struct STasConfig
 {
-    int m_TPS;                   // 每秒 tick 数 (默认 50)
+    int m_CurrentTPS;            // 当前每秒 tick 数 (默认 50)
     bool m_Paused;               // 是否暂停
-    int m_StepSize;              // 逐帧导航的步长 (默认 1 tick)
+    int m_FrameStep;             // 逐帧导航的步长 (默认 1 tick)
     
-    STasConfig() : m_TPS(50), m_Paused(false), m_StepSize(1) {}
+    STasConfig() : m_CurrentTPS(50), m_Paused(false), m_FrameStep(1) {}
 };
 
 #endif // GAME_TAS_TAS_TYPES_H
