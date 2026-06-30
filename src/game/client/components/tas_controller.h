@@ -4,7 +4,7 @@
 #define GAME_CLIENT_COMPONENTS_TAS_CONTROLLER_H
 
 #include <engine/shared/config.h>
-#include <game/generated/protocol.h>
+#include <generated/protocol.h>
 #include <game/client/gameclient.h>
 #include "tas_types.h"
 
