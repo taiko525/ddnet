@@ -66,6 +66,8 @@
 #include "components/sounds.h"
 #include "components/spectator.h"
 #include "components/statboard.h"
+#include "components/tas_controller.h"
+#include "components/tas_ui.h"
 #include "components/tooltips.h"
 #include "components/touch_controls.h"
 #include "components/voting.h"
@@ -187,6 +189,9 @@ public:
 
 	CRaceDemo m_RaceDemo;
 	CGhost m_Ghost;
+
+	CTasController m_TasController;
+	CTasUI m_TasUI;
 
 	CTooltips m_Tooltips;
 

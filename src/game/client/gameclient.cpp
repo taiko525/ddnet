@@ -36,6 +36,8 @@
 #include "components/sounds.h"
 #include "components/spectator.h"
 #include "components/statboard.h"
+#include "components/tas_controller.h"
+#include "components/tas_ui.h"
 #include "components/voting.h"
 #include "lineinput.h"
 #include "prediction/entities/character.h"
@@ -141,6 +143,7 @@ void CGameClient::OnConsoleInit()
 					      &m_Particles.m_RenderTrailExtra,
 					      &m_Items,
 					      &m_Ghost,
+                                      &m_TasUI,
 					      &m_Players,
 					      &m_MapLayersForeground,
 					      &m_Particles.m_RenderExplosions,
@@ -170,6 +173,7 @@ void CGameClient::OnConsoleInit()
 	// build the input stack
 	m_vpInput.insert(m_vpInput.end(), {&m_KeyBinder, // this will take over all input when we want to bind a key
 						  &m_Binds.m_SpecialBinds,
+                                      &m_TasUI,
 						  &m_GameConsole,
 						  &m_Chat, // chat has higher prio, due to that you can quit it by pressing esc
 						  &m_Scoreboard,
@@ -533,6 +537,13 @@ int CGameClient::OnSnapInput(int *pData, bool Dummy, bool Force)
 {
 	if(!Dummy)
 	{
+		// TAS recording: override input if recording
+		if(m_TasController.IsActive() && m_TasController.IsRecording())
+		{
+			CNetObj_PlayerInput TasInput;
+			m_TasController.RecordInput(m_Controls.m_aInputData[g_Config.m_ClDummy], &TasInput);
+			return m_Controls.SnapInput(pData, &TasInput);
+		}
 		return m_Controls.SnapInput(pData);
 	}
 	if(m_aLocalIds[!g_Config.m_ClDummy] < 0)
@@ -842,6 +853,17 @@ void CGameClient::OnRender()
 	m_Camera.UpdateCamera();
 
 	UpdateSpectatorCursor();
+
+	// TAS playback: override input if playing back
+	if(m_TasController.IsActive() && m_TasController.IsPlayingBack())
+	{
+		CNetObj_PlayerInput TasInput;
+		if(m_TasController.PlaybackInput(&TasInput))
+		{
+			// Apply TAS input to controls
+			m_Controls.m_aInputData[g_Config.m_ClDummy] = TasInput;
+		}
+	}
 
 	// render all systems
 	for(auto &pComponent : m_vpAll)
@@ -1210,6 +1232,7 @@ void CGameClient::OnMessage(int MsgId, CUnpacker *pUnpacker, int Conn, bool Dumm
 
 		m_Ghost.m_AllowRestart = true;
 		m_RaceDemo.m_AllowRestart = true;
+                m_TasController.OnTasEvent(TASEvent::ROUND_START);
 	}
 	else if(MsgId == NETMSGTYPE_SV_KILLMSG)
 	{
