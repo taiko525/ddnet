@@ -161,6 +161,7 @@ public:
     
     bool IsRecording() const { return m_IsRecording; }
     bool IsPlaying() const { return m_IsPlaying; }
+    bool IsEmpty() const { return m_Frames.empty(); }
     
 private:
     std::vector<STasInputFrame> m_Frames;
