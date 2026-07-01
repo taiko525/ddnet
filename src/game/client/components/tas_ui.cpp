@@ -1,8 +1,10 @@
 /* (c) Magnus Auvinen. See licence.txt in the root of the distribution for more information. */
 /* If you are missing that file, acquire a complete release at teeworlds.com.                */
+#include <base/color.h>
 #include <engine/shared/config.h>
 #include <engine/console.h>
 #include <engine/keys.h>
+#include <engine/textrender.h>
 #include <game/client/gameclient.h>
 #include <game/client/components/menus.h>
 #include <generated/client_data.h>
@@ -165,7 +167,7 @@ void CTasUI::RenderTasPanel()
 		(m_pTasController->IsPlayingBack() ? "PLAYBACK" : "IDLE"));
 	
 	pTextRender->TextColor(1.0f, 1.0f, 0.0f, 1.0f);
-	pTextRender->Text(X + 10.0f, Y + 15.0f, 12.0f, aTitle);
+	pTextRender->Text(0, X + 10.0f, Y + 15.0f, 12.0f, aTitle);
 	
 	// Status info
 	float TextY = Y + 35.0f;
@@ -177,33 +179,33 @@ void CTasUI::RenderTasPanel()
 	
 	// TPS
 	str_format(aLine, sizeof(aLine), "TPS: %d/%d", m_pTasController->GetCurrentTps(), m_pTasController->GetMaxTps());
-	pTextRender->Text(X + 10.0f, TextY, 10.0f, aLine);
+	pTextRender->Text(0, X + 10.0f, TextY, 10.0f, aLine);
 	TextY += LineHeight;
 	
 	// Pause state
 	str_format(aLine, sizeof(aLine), "State: %s", m_pTasController->IsPaused() ? "PAUSED" : "RUNNING");
-	pTextRender->Text(X + 10.0f, TextY, 10.0f, aLine);
+	pTextRender->Text(0, X + 10.0f, TextY, 10.0f, aLine);
 	TextY += LineHeight;
 	
 	// Frame info
 	str_format(aLine, sizeof(aLine), "Frame: %d / %d", 
 		m_pTasController->GetCurrentFrame(), 
 		m_pTasController->GetTotalFrames());
-	pTextRender->Text(X + 10.0f, TextY, 10.0f, aLine);
+	pTextRender->Text(0, X + 10.0f, TextY, 10.0f, aLine);
 	TextY += LineHeight;
 	
 	// Recording/Playback indicator
 	if(m_pTasController->IsRecording())
 	{
 		pTextRender->TextColor(1.0f, 0.0f, 0.0f, 1.0f);
-		pTextRender->Text(X + 10.0f, TextY, 10.0f, "[REC]");
+		pTextRender->Text(0, X + 10.0f, TextY, 10.0f, "[REC]");
 		TextY += LineHeight;
 		pTextRender->TextColor(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 	else if(m_pTasController->IsPlayingBack())
 	{
 		pTextRender->TextColor(0.0f, 1.0f, 0.0f, 1.0f);
-		pTextRender->Text(X + 10.0f, TextY, 10.0f, "[PLAY]");
+		pTextRender->Text(0, X + 10.0f, TextY, 10.0f, "[PLAY]");
 		TextY += LineHeight;
 		pTextRender->TextColor(1.0f, 1.0f, 1.0f, 1.0f);
 	}
@@ -211,17 +213,17 @@ void CTasUI::RenderTasPanel()
 	// Controls hint
 	TextY += 5.0f;
 	pTextRender->TextColor(0.8f, 0.8f, 0.8f, 1.0f);
-	pTextRender->Text(X + 10.0f, TextY, 8.0f, "Controls:");
+	pTextRender->Text(0, X + 10.0f, TextY, 8.0f, "Controls:");
 	TextY += 12.0f;
-	pTextRender->Text(X + 10.0f, TextY, 8.0f, "Pause: PAUSE key");
+	pTextRender->Text(0, X + 10.0f, TextY, 8.0f, "Pause: PAUSE key");
 	TextY += 10.0f;
-	pTextRender->Text(X + 10.0f, TextY, 8.0f, "Record: R | Playback: L");
+	pTextRender->Text(0, X + 10.0f, TextY, 8.0f, "Record: R | Playback: L");
 	TextY += 10.0f;
-	pTextRender->Text(X + 10.0f, TextY, 8.0f, "Clear: C");
+	pTextRender->Text(0, X + 10.0f, TextY, 8.0f, "Clear: C");
 	TextY += 10.0f;
-	pTextRender->Text(X + 10.0f, TextY, 8.0f, "Frame Step: , / .");
+	pTextRender->Text(0, X + 10.0f, TextY, 8.0f, "Frame Step: , / .");
 	TextY += 10.0f;
-	pTextRender->Text(X + 10.0f, TextY, 8.0f, "Shift+: 10 frames");
+	pTextRender->Text(0, X + 10.0f, TextY, 8.0f, "Shift+: 10 frames");
 }
 
 void CTasUI::RenderStatusMessage()
@@ -246,7 +248,7 @@ void CTasUI::RenderStatusMessage()
 	
 	// Text
 	pTextRender->TextColor(1.0f, 1.0f, 1.0f, 1.0f);
-	pTextRender->Text(X + 10.0f, Y + 7.0f, 12.0f, m_StatusMessage);
+	pTextRender->Text(0, X + 10.0f, Y + 7.0f, 12.0f, m_StatusMessage);
 	
 	// Update fade time
 	m_StatusMessageTime -= 1.0f / 60.0f; // Assume 60 FPS for UI
