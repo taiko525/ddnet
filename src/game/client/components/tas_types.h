@@ -15,9 +15,9 @@ struct STasInputFrame
     int m_Jump;                  // 跳跃输入 (0 或 1)
     int m_Fire;                  // 开火/钩子输入 (0 或 1)
     int m_Hook;                  // 钩子状态 (0 或 1)
-    int m_PlayerAngle;           // 玩家角度 (0-255, 对应 0-360 度)
+    int m_TargetX;               // 目标 X 坐标
+    int m_TargetY;               // 目标 Y 坐标
     int m_WantedWeapon;          // 期望武器
-    int m_Force;                 // 力度控制 (用于武器)
     
     // 从游戏输入转换到 TAS 帧
     static STasInputFrame FromGameInput(int64_t Tick, const CNetObj_PlayerInput *pInput)
@@ -28,9 +28,9 @@ struct STasInputFrame
         Frame.m_Jump = pInput->m_Jump;
         Frame.m_Fire = pInput->m_Fire;
         Frame.m_Hook = pInput->m_Hook;
-        Frame.m_PlayerAngle = pInput->m_TargetAngle;
+        Frame.m_TargetX = pInput->m_TargetX;
+        Frame.m_TargetY = pInput->m_TargetY;
         Frame.m_WantedWeapon = pInput->m_WantedWeapon;
-        Frame.m_Force = pInput->m_Force;
         return Frame;
     }
     
@@ -41,9 +41,9 @@ struct STasInputFrame
         pInput->m_Jump = m_Jump;
         pInput->m_Fire = m_Fire;
         pInput->m_Hook = m_Hook;
-        pInput->m_TargetAngle = m_PlayerAngle;
+        pInput->m_TargetX = m_TargetX;
+        pInput->m_TargetY = m_TargetY;
         pInput->m_WantedWeapon = m_WantedWeapon;
-        pInput->m_Force = m_Force;
     }
 };
 
@@ -67,29 +67,29 @@ struct STasStateSnapshot
     int m_Health;                // 生命值
     int m_Armor;                 // 护甲值
     
-    // 从角色状态创建快照
-    static STasStateSnapshot FromCharacter(class CCharacter *pChar, int64_t Tick)
+    // 从角色状态创建快照 (using CNetObj_Character instead of CCharacter)
+    static STasStateSnapshot FromCharacter(const CNetObj_Character *pCharData, int64_t Tick)
     {
         STasStateSnapshot Snapshot;
         Snapshot.m_Tick = Tick;
         
-        if(pChar)
+        if(pCharData)
         {
-            Snapshot.m_PosX = pChar->m_Pos.x;
-            Snapshot.m_PosY = pChar->m_Pos.y;
-            Snapshot.m_VelX = pChar->m_Vel.x;
-            Snapshot.m_VelY = pChar->m_Vel.y;
-            Snapshot.m_Direction = pChar->m_Direction;
-            Snapshot.m_Jumped = pChar->m_Jumped;
-            Snapshot.m_JumpedTotal = pChar->m_JumpedTotal;
-            Snapshot.m_HookState = pChar->m_Core.m_Hook.m_State;
-            Snapshot.m_HookX = pChar->m_Core.m_Hook.m_Pos.x;
-            Snapshot.m_HookY = pChar->m_Core.m_Hook.m_Pos.y;
-            Snapshot.m_HookTick = pChar->m_Core.m_Hook.m_Tick;
-            Snapshot.m_Weapon = pChar->m_Weapon;
-            Snapshot.m_Ammo = pChar->m_AmmoCount;
-            Snapshot.m_Health = pChar->m_Health;
-            Snapshot.m_Armor = pChar->m_Armor;
+            Snapshot.m_PosX = pCharData->m_X / 256.0f;
+            Snapshot.m_PosY = pCharData->m_Y / 256.0f;
+            Snapshot.m_VelX = pCharData->m_VelX / 256.0f;
+            Snapshot.m_VelY = pCharData->m_VelY / 256.0f;
+            Snapshot.m_Direction = pCharData->m_Direction;
+            Snapshot.m_Jumped = pCharData->m_Jumped;
+            Snapshot.m_JumpedTotal = 0; // Not available in snap
+            Snapshot.m_HookState = pCharData->m_HookState;
+            Snapshot.m_HookX = pCharData->m_HookX / 256.0f;
+            Snapshot.m_HookY = pCharData->m_HookY / 256.0f;
+            Snapshot.m_HookTick = pCharData->m_HookTick;
+            Snapshot.m_Weapon = pCharData->m_Weapon;
+            Snapshot.m_Ammo = pCharData->m_AmmoCount;
+            Snapshot.m_Health = pCharData->m_Health;
+            Snapshot.m_Armor = pCharData->m_Armor;
         }
         else
         {

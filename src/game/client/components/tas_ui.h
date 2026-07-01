@@ -25,6 +25,7 @@ private:
 public:
 	CTasUI();
 	
+	int Sizeof() const override { return sizeof(*this); }
 	virtual void OnStateInit();
 	virtual void OnReset();
 	virtual void OnRender();

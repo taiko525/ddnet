@@ -1,0 +1,210 @@
+Determining if the __i386 exist failed with the following output:
+Change Dir: /workspace/build/CMakeFiles/CMakeScratch/TryCompile-pkdn3E
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9b7b1/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_9b7b1.dir/build.make CMakeFiles/cmTC_9b7b1.dir/build
+gmake[1]: Entering directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-pkdn3E'
+Building C object CMakeFiles/cmTC_9b7b1.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_9b7b1.dir/CheckSymbolExists.c.o -c /workspace/build/CMakeFiles/CMakeScratch/TryCompile-pkdn3E/CheckSymbolExists.c
+/workspace/build/CMakeFiles/CMakeScratch/TryCompile-pkdn3E/CheckSymbolExists.c: In function ‘main’:
+/workspace/build/CMakeFiles/CMakeScratch/TryCompile-pkdn3E/CheckSymbolExists.c:7:19: error: ‘__i386’ undeclared (first use in this function)
+    7 |   return ((int*)(&__i386))[argc];
+      |                   ^~~~~~
+/workspace/build/CMakeFiles/CMakeScratch/TryCompile-pkdn3E/CheckSymbolExists.c:7:19: note: each undeclared identifier is reported only once for each function it appears in
+gmake[1]: *** [CMakeFiles/cmTC_9b7b1.dir/build.make:78: CMakeFiles/cmTC_9b7b1.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-pkdn3E'
+gmake: *** [Makefile:127: cmTC_9b7b1/fast] Error 2
+
+
+File CheckSymbolExists.c:
+/* */
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef __i386
+  return ((int*)(&__i386))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Performing C SOURCE FILE Test FLAG_SUPPORTED_fuse_ld_mold failed with the following output:
+Change Dir: /workspace/build/CMakeFiles/CMakeScratch/TryCompile-2vdVDz
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_330d8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_330d8.dir/build.make CMakeFiles/cmTC_330d8.dir/build
+gmake[1]: Entering directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-2vdVDz'
+Building C object CMakeFiles/cmTC_330d8.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_fuse_ld_mold   -o CMakeFiles/cmTC_330d8.dir/src.c.o -c /workspace/build/CMakeFiles/CMakeScratch/TryCompile-2vdVDz/src.c
+Linking C executable cmTC_330d8
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_330d8.dir/link.txt --verbose=1
+/usr/bin/cc -fuse-ld=mold CMakeFiles/cmTC_330d8.dir/src.c.o -o cmTC_330d8 
+collect2: fatal error: cannot find 'ld'
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_330d8.dir/build.make:99: cmTC_330d8] Error 1
+gmake[1]: Leaving directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-2vdVDz'
+gmake: *** [Makefile:127: cmTC_330d8/fast] Error 2
+
+
+Source file was:
+int main(void) { return 0; }
+
+Performing C SOURCE FILE Test FLAG_SUPPORTED_fuse_ld_lld failed with the following output:
+Change Dir: /workspace/build/CMakeFiles/CMakeScratch/TryCompile-g4xOrP
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_daf80/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_daf80.dir/build.make CMakeFiles/cmTC_daf80.dir/build
+gmake[1]: Entering directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-g4xOrP'
+Building C object CMakeFiles/cmTC_daf80.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_fuse_ld_lld   -o CMakeFiles/cmTC_daf80.dir/src.c.o -c /workspace/build/CMakeFiles/CMakeScratch/TryCompile-g4xOrP/src.c
+Linking C executable cmTC_daf80
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_daf80.dir/link.txt --verbose=1
+/usr/bin/cc -fuse-ld=lld CMakeFiles/cmTC_daf80.dir/src.c.o -o cmTC_daf80 
+collect2: fatal error: cannot find 'ld'
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_daf80.dir/build.make:99: cmTC_daf80] Error 1
+gmake[1]: Leaving directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-g4xOrP'
+gmake: *** [Makefile:127: cmTC_daf80/fast] Error 2
+
+
+Source file was:
+int main(void) { return 0; }
+
+Performing C++ SOURCE FILE Test FLAG_SUPPORTED_Wa__mbig_obj failed with the following output:
+Change Dir: /workspace/build/CMakeFiles/CMakeScratch/TryCompile-N9L9q3
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_8acdf/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_8acdf.dir/build.make CMakeFiles/cmTC_8acdf.dir/build
+gmake[1]: Entering directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-N9L9q3'
+Building CXX object CMakeFiles/cmTC_8acdf.dir/src.cxx.o
+/usr/bin/c++ -DFLAG_SUPPORTED_Wa__mbig_obj  -Wa,-mbig-obj -o CMakeFiles/cmTC_8acdf.dir/src.cxx.o -c /workspace/build/CMakeFiles/CMakeScratch/TryCompile-N9L9q3/src.cxx
+as: unrecognized option '-mbig-obj'
+gmake[1]: *** [CMakeFiles/cmTC_8acdf.dir/build.make:78: CMakeFiles/cmTC_8acdf.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-N9L9q3'
+gmake: *** [Makefile:127: cmTC_8acdf/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }
+
+Performing C++ SOURCE FILE Test FLAG_SUPPORTED_Wdynamic_class_memaccess failed with the following output:
+Change Dir: /workspace/build/CMakeFiles/CMakeScratch/TryCompile-rEZMki
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_3039f/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_3039f.dir/build.make CMakeFiles/cmTC_3039f.dir/build
+gmake[1]: Entering directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-rEZMki'
+Building CXX object CMakeFiles/cmTC_3039f.dir/src.cxx.o
+/usr/bin/c++ -DFLAG_SUPPORTED_Wdynamic_class_memaccess  -Wdynamic-class-memaccess -o CMakeFiles/cmTC_3039f.dir/src.cxx.o -c /workspace/build/CMakeFiles/CMakeScratch/TryCompile-rEZMki/src.cxx
+c++: error: unrecognized command-line option '-Wdynamic-class-memaccess'; did you mean '-Wno-class-memaccess'?
+gmake[1]: *** [CMakeFiles/cmTC_3039f.dir/build.make:78: CMakeFiles/cmTC_3039f.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-rEZMki'
+gmake: *** [Makefile:127: cmTC_3039f/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }
+
+Performing C++ SOURCE FILE Test FLAG_SUPPORTED_Wshadow_all failed with the following output:
+Change Dir: /workspace/build/CMakeFiles/CMakeScratch/TryCompile-OTt5HH
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_05b18/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_05b18.dir/build.make CMakeFiles/cmTC_05b18.dir/build
+gmake[1]: Entering directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-OTt5HH'
+Building CXX object CMakeFiles/cmTC_05b18.dir/src.cxx.o
+/usr/bin/c++ -DFLAG_SUPPORTED_Wshadow_all  -Wshadow-all -o CMakeFiles/cmTC_05b18.dir/src.cxx.o -c /workspace/build/CMakeFiles/CMakeScratch/TryCompile-OTt5HH/src.cxx
+c++: error: unrecognized command-line option '-Wshadow-all'; did you mean '-Wshadow'?
+gmake[1]: *** [CMakeFiles/cmTC_05b18.dir/build.make:78: CMakeFiles/cmTC_05b18.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-OTt5HH'
+gmake: *** [Makefile:127: cmTC_05b18/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }
+
+Performing C++ SOURCE FILE Test FLAG_SUPPORTED_Wthread_safety failed with the following output:
+Change Dir: /workspace/build/CMakeFiles/CMakeScratch/TryCompile-e1U3Dx
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_fa584/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_fa584.dir/build.make CMakeFiles/cmTC_fa584.dir/build
+gmake[1]: Entering directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-e1U3Dx'
+Building CXX object CMakeFiles/cmTC_fa584.dir/src.cxx.o
+/usr/bin/c++ -DFLAG_SUPPORTED_Wthread_safety  -Wthread-safety -o CMakeFiles/cmTC_fa584.dir/src.cxx.o -c /workspace/build/CMakeFiles/CMakeScratch/TryCompile-e1U3Dx/src.cxx
+c++: error: unrecognized command-line option '-Wthread-safety'
+gmake[1]: *** [CMakeFiles/cmTC_fa584.dir/build.make:78: CMakeFiles/cmTC_fa584.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-e1U3Dx'
+gmake: *** [Makefile:127: cmTC_fa584/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }
+
+Performing C++ SOURCE FILE Test FLAG_SUPPORTED_Wthread_safety_negative failed with the following output:
+Change Dir: /workspace/build/CMakeFiles/CMakeScratch/TryCompile-SwmGlR
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_608c9/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_608c9.dir/build.make CMakeFiles/cmTC_608c9.dir/build
+gmake[1]: Entering directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-SwmGlR'
+Building CXX object CMakeFiles/cmTC_608c9.dir/src.cxx.o
+/usr/bin/c++ -DFLAG_SUPPORTED_Wthread_safety_negative  -Wthread-safety-negative -o CMakeFiles/cmTC_608c9.dir/src.cxx.o -c /workspace/build/CMakeFiles/CMakeScratch/TryCompile-SwmGlR/src.cxx
+c++: error: unrecognized command-line option '-Wthread-safety-negative'
+gmake[1]: *** [CMakeFiles/cmTC_608c9.dir/build.make:78: CMakeFiles/cmTC_608c9.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-SwmGlR'
+gmake: *** [Makefile:127: cmTC_608c9/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }
+
+Determining if the WavpackOpenFileInputEx exist failed with the following output:
+Change Dir: /workspace/build/CMakeFiles/CMakeScratch/TryCompile-9gnNpS
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_0c5f1/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_0c5f1.dir/build.make CMakeFiles/cmTC_0c5f1.dir/build
+gmake[1]: Entering directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-9gnNpS'
+Building C object CMakeFiles/cmTC_0c5f1.dir/CheckSymbolExists.c.o
+/usr/bin/cc  -I/workspace/build/CMakeFiles/CMakeScratch/TryCompile-9gnNpS/src/engine/external/wavpack  -o CMakeFiles/cmTC_0c5f1.dir/CheckSymbolExists.c.o -c /workspace/build/CMakeFiles/CMakeScratch/TryCompile-9gnNpS/CheckSymbolExists.c
+/workspace/build/CMakeFiles/CMakeScratch/TryCompile-9gnNpS/CheckSymbolExists.c:2:10: fatal error: wavpack.h: No such file or directory
+    2 | #include <wavpack.h>
+      |          ^~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_0c5f1.dir/build.make:78: CMakeFiles/cmTC_0c5f1.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-9gnNpS'
+gmake: *** [Makefile:127: cmTC_0c5f1/fast] Error 2
+
+
+File CheckSymbolExists.c:
+/* */
+#include <wavpack.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef WavpackOpenFileInputEx
+  return ((int*)(&WavpackOpenFileInputEx))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the WavpackCloseFile exist failed with the following output:
+Change Dir: /workspace/build/CMakeFiles/CMakeScratch/TryCompile-nFpi9F
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_5aa2b/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_5aa2b.dir/build.make CMakeFiles/cmTC_5aa2b.dir/build
+gmake[1]: Entering directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-nFpi9F'
+Building C object CMakeFiles/cmTC_5aa2b.dir/CheckSymbolExists.c.o
+/usr/bin/cc  -I/workspace/build/CMakeFiles/CMakeScratch/TryCompile-nFpi9F/src/engine/external/wavpack  -o CMakeFiles/cmTC_5aa2b.dir/CheckSymbolExists.c.o -c /workspace/build/CMakeFiles/CMakeScratch/TryCompile-nFpi9F/CheckSymbolExists.c
+/workspace/build/CMakeFiles/CMakeScratch/TryCompile-nFpi9F/CheckSymbolExists.c:2:10: fatal error: wavpack.h: No such file or directory
+    2 | #include <wavpack.h>
+      |          ^~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_5aa2b.dir/build.make:78: CMakeFiles/cmTC_5aa2b.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/workspace/build/CMakeFiles/CMakeScratch/TryCompile-nFpi9F'
+gmake: *** [Makefile:127: cmTC_5aa2b/fast] Error 2
+
+
+File CheckSymbolExists.c:
+/* */
+#include <wavpack.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef WavpackCloseFile
+  return ((int*)(&WavpackCloseFile))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}

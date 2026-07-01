@@ -537,14 +537,14 @@ int CGameClient::OnSnapInput(int *pData, bool Dummy, bool Force)
 {
 	if(!Dummy)
 	{
-		// TAS recording: override input if recording
-		if(m_TasController.IsActive() && m_TasController.IsRecording())
-		{
-			CNetObj_PlayerInput TasInput;
-			m_TasController.RecordInput(m_Controls.m_aInputData[g_Config.m_ClDummy], &TasInput);
-			return m_Controls.SnapInput(pData, &TasInput);
-		}
+	// TAS recording: override input if recording
+	if(m_TasController.IsActive() && m_TasController.IsRecording())
+	{
+		CNetObj_PlayerInput TasInput;
+		m_TasController.ProcessPlayerInput(g_Config.m_ClDummy, &m_Controls.m_aInputData[g_Config.m_ClDummy]);
 		return m_Controls.SnapInput(pData);
+	}
+	return m_Controls.SnapInput(pData);
 	}
 	if(m_aLocalIds[!g_Config.m_ClDummy] < 0)
 	{
@@ -857,12 +857,9 @@ void CGameClient::OnRender()
 	// TAS playback: override input if playing back
 	if(m_TasController.IsActive() && m_TasController.IsPlayingBack())
 	{
-		CNetObj_PlayerInput TasInput;
-		if(m_TasController.PlaybackInput(&TasInput))
-		{
-			// Apply TAS input to controls
-			m_Controls.m_aInputData[g_Config.m_ClDummy] = TasInput;
-		}
+		CNetObj_PlayerInput TasInput = m_TasController.GetPlaybackInput(g_Config.m_ClDummy);
+		// Apply TAS input to controls
+		m_Controls.m_aInputData[g_Config.m_ClDummy] = TasInput;
 	}
 
 	// render all systems
@@ -1232,7 +1229,6 @@ void CGameClient::OnMessage(int MsgId, CUnpacker *pUnpacker, int Conn, bool Dumm
 
 		m_Ghost.m_AllowRestart = true;
 		m_RaceDemo.m_AllowRestart = true;
-                m_TasController.OnTasEvent(TASEvent::ROUND_START);
 	}
 	else if(MsgId == NETMSGTYPE_SV_KILLMSG)
 	{
