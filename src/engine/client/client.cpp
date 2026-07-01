@@ -4857,8 +4857,10 @@ int main(int argc, const char **argv)
 	pClient->SetLoggers(pFutureFileLogger, std::move(pStdoutLogger));
 
 	IKernel *pKernel = IKernel::Create();
-	pClient->RegisterInterfaces();
+	// Register client first so that CClient::Kernel() returns valid pointer
+	// when RegisterInterfaces() calls Kernel()->RegisterInterface()
 	pKernel->RegisterInterface(pClient, false);
+	pClient->RegisterInterfaces();
 	CleanerFunctions.emplace([pKernel, pClient]() {
 		// Ensure that the assert handler doesn't use the client/graphics after they've been destroyed
 		dbg_assert_set_handler(nullptr);

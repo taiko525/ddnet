@@ -1,1 +1,1 @@
-(src/engine/client/client.cpp)
+Nothing needs to be added to .gitignore since only a source code file (.cpp) was modified and no build artifacts, dependencies, or temporary files were detected in the changes.
