@@ -48,6 +48,8 @@ void CTasUI::OnRender()
 void CTasUI::OnConsoleInit()
 {
 	IConsole *pConsole = GameClient()->Console();
+	if(!pConsole)
+		return;
 	
 	// TAS Control Commands
 	pConsole->Register("tas_pause", "", CFGFLAG_CLIENT, ConPause, this, "Toggle TAS pause");
