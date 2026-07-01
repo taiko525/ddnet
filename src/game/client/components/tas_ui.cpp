@@ -4,7 +4,7 @@
 #include <engine/console.h>
 #include <game/client/gameclient.h>
 #include <game/client/components/menus.h>
-#include <game/generated/client_data.h>
+#include <generated/client_data.h>
 #include <game/client/lineinput.h>
 
 #include "tas_ui.h"

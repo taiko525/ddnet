@@ -1,5 +1,6 @@
 /* (c) Magnus Auvinen. See licence.txt in the root of the distribution for more information. */
 /* If you are missing that file, acquire a complete release at teeworlds.com.                */
+#include <base/io.h>
 #include <engine/storage.h>
 #include <game/client/gameclient.h>
 #include <game/client/components/players.h>
@@ -207,13 +208,13 @@ void CTasController::CaptureStateSnapshot()
 		return;
 	
 	STasStateSnapshot Snapshot;
-	Snapshot.m_Tick = GetGameTick();
+	Snapshot.m_Tick = m_pGameClient->m_Snap.m_pLocalInfo ? m_pGameClient->m_Snap.m_pLocalInfo->m_Version : 0;
 	
 	// Capture state for local player
-	int LocalClientID = m_pGameClient->m_Snap.m_LocalClientID;
+	int LocalClientID = m_pGameClient->m_Snap.m_LocalClientId;
 	if(LocalClientID >= 0 && LocalClientID < MAX_CLIENTS && m_pGameClient->m_Snap.m_aCharacters[LocalClientID].m_Active)
 	{
-		const CNetObj_Character &CharData = m_pGameClient->m_Snap.m_aCharacters[LocalClientID].m_Data;
+		const CNetObj_Character &CharData = m_pGameClient->m_Snap.m_aCharacters[LocalClientID].m_Cur;
 		Snapshot.m_PosX = CharData.m_X / 256.0f;
 		Snapshot.m_PosY = CharData.m_Y / 256.0f;
 		Snapshot.m_VelX = CharData.m_VelX / 256.0f;
@@ -233,7 +234,7 @@ void CTasController::CaptureStateSnapshot()
 	else
 	{
 		// Default values when character data not available
-		Snapshot = STasStateSnapshot::FromCharacter(nullptr, GetGameTick());
+		Snapshot = STasStateSnapshot::FromCharacter(nullptr, Snapshot.m_Tick);
 	}
 	
 	m_StateSnapshots.push_back(Snapshot);
@@ -352,7 +353,7 @@ void CTasController::ApplyTPSDelay()
 int CTasController::GetGameTick()
 {
 	if(m_pGameClient)
-		return m_pGameClient->ServerTick();
+		return m_pGameClient->Client()->GameTick(0);
 	return 0;
 }
 
