@@ -8,7 +8,7 @@
 #include <game/client/gameclient.h>
 #include "tas_types.h"
 
-class CTasController
+class CTasController : public CComponentInterfaces
 {
 public:
 	CTasController();
