@@ -59,6 +59,9 @@ public:
 	bool SaveToFile(const char *pFilename);
 	bool LoadFromFile(const char *pFilename);
 	
+	// For UI access
+	void SetTps(int Tps) { SetTPS(Tps); }
+	
 private:
 	CGameClient *m_pGameClient;
 	
