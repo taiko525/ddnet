@@ -42,6 +42,19 @@ public:
 	
 	// Shortcut handlers
 	bool HandleTasShortcuts(IInput::CEvent Event);
+	
+	// Console command callbacks (must be static)
+	static void ConPause(IConsole::IResult *pResult, void *pUserData);
+	static void ConRecord(IConsole::IResult *pResult, void *pUserData);
+	static void ConPlayback(IConsole::IResult *pResult, void *pUserData);
+	static void ConClear(IConsole::IResult *pResult, void *pUserData);
+	static void ConRewind(IConsole::IResult *pResult, void *pUserData);
+	static void ConForward(IConsole::IResult *pResult, void *pUserData);
+	static void ConSetTps(IConsole::IResult *pResult, void *pUserData);
+	static void ConTogglePanel(IConsole::IResult *pResult, void *pUserData);
+	static void ConSave(IConsole::IResult *pResult, void *pUserData);
+	static void ConLoad(IConsole::IResult *pResult, void *pUserData);
+	static void ConStatus(IConsole::IResult *pResult, void *pUserData);
 };
 
 #endif

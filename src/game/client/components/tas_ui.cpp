@@ -2,6 +2,7 @@
 /* If you are missing that file, acquire a complete release at teeworlds.com.                */
 #include <engine/shared/config.h>
 #include <engine/console.h>
+#include <engine/keys.h>
 #include <game/client/gameclient.h>
 #include <game/client/components/menus.h>
 #include <generated/client_data.h>
@@ -107,7 +108,8 @@ bool CTasUI::HandleTasShortcuts(IInput::CEvent Event)
 				UpdateStatusMessage("Advanced 1 frame");
 				return true;
 				
-			case KEY_SHIFT:
+			case KEY_LSHIFT:
+			case KEY_RSHIFT:
 				// Shift + , or . for larger steps
 				break;
 		}
@@ -116,7 +118,7 @@ bool CTasUI::HandleTasShortcuts(IInput::CEvent Event)
 	// Handle shift combinations
 	if(Event.m_Flags & IInput::FLAG_PRESS)
 	{
-		if(Input()->KeyIsPressed(KEY_SHIFT))
+		if(Input()->KeyIsPressed(KEY_LSHIFT) || Input()->KeyIsPressed(KEY_RSHIFT))
 		{
 			if(Event.m_Key == KEY_COMMA)
 			{
@@ -142,7 +144,7 @@ void CTasUI::RenderTasPanel()
 		return;
 	
 	CRenderTools *pRT = &GameClient()->m_RenderTools;
-	CTextRender *pTextRender = TextRender();
+	ITextRender *pTextRender = TextRender();
 	
 	float ScreenX0, ScreenX1, ScreenY0, ScreenY1;
 	Graphics()->GetScreen(&ScreenX0, &ScreenY0, &ScreenX1, &ScreenY1);
@@ -153,8 +155,8 @@ void CTasUI::RenderTasPanel()
 	float Y = m_PanelPositionY;
 	
 	// Draw background
-	CColorRGBA BgColor(0.0f, 0.0f, 0.0f, 0.7f);
-	pRT->DrawRoundRect(X, Y, PanelWidth, PanelHeight, BgColor, 5.0f);
+	ColorRGBA BgColor(0.0f, 0.0f, 0.0f, 0.7f);
+	Graphics()->DrawRect(X, Y, PanelWidth, PanelHeight, BgColor, IGraphics::CORNER_ALL, 5.0f);
 	
 	// Title
 	char aTitle[64];
@@ -228,7 +230,7 @@ void CTasUI::RenderStatusMessage()
 		return;
 	
 	CRenderTools *pRT = &GameClient()->m_RenderTools;
-	CTextRender *pTextRender = TextRender();
+	ITextRender *pTextRender = TextRender();
 	
 	float ScreenX0, ScreenX1, ScreenY0, ScreenY1;
 	Graphics()->GetScreen(&ScreenX0, &ScreenY0, &ScreenX1, &ScreenY1);
@@ -239,8 +241,8 @@ void CTasUI::RenderStatusMessage()
 	float Y = ScreenY1 - 50.0f;
 	
 	// Background
-	CColorRGBA BgColor(0.0f, 0.0f, 0.0f, 0.8f);
-	pRT->DrawRoundRect(X, Y, MsgWidth, MsgHeight, BgColor, 5.0f);
+	ColorRGBA BgColor(0.0f, 0.0f, 0.0f, 0.8f);
+	Graphics()->DrawRect(X, Y, MsgWidth, MsgHeight, BgColor, IGraphics::CORNER_ALL, 5.0f);
 	
 	// Text
 	pTextRender->TextColor(1.0f, 1.0f, 1.0f, 1.0f);
