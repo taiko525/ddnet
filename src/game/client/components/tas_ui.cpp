@@ -47,9 +47,6 @@ void CTasUI::OnRender()
 
 void CTasUI::OnConsoleInit()
 {
-	if(!m_pTasController)
-		return;
-	
 	IConsole *pConsole = GameClient()->Console();
 	
 	// TAS Control Commands
@@ -64,6 +61,12 @@ void CTasUI::OnConsoleInit()
 	pConsole->Register("tas_save", "s", CFGFLAG_CLIENT, ConSave, this, "Save TAS to file");
 	pConsole->Register("tas_load", "s", CFGFLAG_CLIENT, ConLoad, this, "Load TAS from file");
 	pConsole->Register("tas_status", "", CFGFLAG_CLIENT, ConStatus, this, "Show TAS status");
+}
+
+void CTasUI::OnStateChange(int NewState, int OldState)
+{
+	// Handle connection state changes if needed
+	// Currently no specific state change handling required for TAS UI
 }
 
 bool CTasUI::OnInput(IInput::CEvent Event)
