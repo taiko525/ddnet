@@ -208,7 +208,7 @@ void CTasController::CaptureStateSnapshot()
 		return;
 	
 	STasStateSnapshot Snapshot;
-	Snapshot.m_Tick = m_pGameClient->m_Snap.m_pLocalInfo ? m_pGameClient->m_Snap.m_pLocalInfo->m_Version : 0;
+	Snapshot.m_Tick = GetGameTick();
 	
 	// Capture state for local player
 	int LocalClientID = m_pGameClient->m_Snap.m_LocalClientId;
