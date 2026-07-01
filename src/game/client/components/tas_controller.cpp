@@ -204,7 +204,7 @@ CNetObj_PlayerInput CTasController::GetPlaybackInput(int ClientID)
 
 void CTasController::CaptureStateSnapshot()
 {
-	if(!m_pGameClient)
+	if(!m_pGameClient || !m_pGameClient->Client())
 		return;
 	
 	STasStateSnapshot Snapshot;
@@ -249,7 +249,7 @@ void CTasController::RestoreStateSnapshot(int FrameIndex)
 
 bool CTasController::SaveToFile(const char *pFilename)
 {
-	if(!m_pGameClient)
+	if(!m_pGameClient || !m_pGameClient->Storage())
 		return false;
 	
 	IOHANDLE File = m_pGameClient->Storage()->OpenFile(pFilename, IOFLAG_WRITE, IStorage::TYPE_SAVE);
@@ -283,7 +283,7 @@ bool CTasController::SaveToFile(const char *pFilename)
 
 bool CTasController::LoadFromFile(const char *pFilename)
 {
-	if(!m_pGameClient)
+	if(!m_pGameClient || !m_pGameClient->Storage())
 		return false;
 	
 	IOHANDLE File = m_pGameClient->Storage()->OpenFile(pFilename, IOFLAG_READ, IStorage::TYPE_SAVE);
@@ -352,9 +352,9 @@ void CTasController::ApplyTPSDelay()
 
 int CTasController::GetGameTick()
 {
-	if(m_pGameClient)
-		return m_pGameClient->Client()->GameTick(0);
-	return 0;
+	if(!m_pGameClient || !m_pGameClient->Client())
+		return 0;
+	return m_pGameClient->Client()->GameTick(0);
 }
 
 void CTasController::ResetCharacter(int ClientID)
