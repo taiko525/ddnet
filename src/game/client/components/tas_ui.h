@@ -30,6 +30,7 @@ public:
 	virtual void OnReset();
 	virtual void OnRender();
 	virtual void OnConsoleInit();
+	virtual void OnStateChange(int NewState, int OldState);
 	virtual bool OnInput(IInput::CEvent Event);
 	
 	void SetController(CTasController *pController) { m_pTasController = pController; }
