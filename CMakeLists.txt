@@ -2583,6 +2583,11 @@ if(CLIENT)
     components/spectator.h
     components/statboard.cpp
     components/statboard.h
+    components/tas_controller.cpp
+    components/tas_controller.h
+    components/tas_types.h
+    components/tas_ui.cpp
+    components/tas_ui.h
     components/tooltips.cpp
     components/tooltips.h
     components/touch_controls.cpp
