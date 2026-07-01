@@ -3089,6 +3089,7 @@ void CClient::Update()
 
 void CClient::RegisterInterfaces()
 {
+	Kernel()->RegisterInterface(static_cast<IClient *>(this), false);
 	Kernel()->RegisterInterface(static_cast<IDemoPlayer *>(&m_DemoPlayer), false);
 	Kernel()->RegisterInterface(static_cast<IGhostRecorder *>(&m_GhostRecorder), false);
 	Kernel()->RegisterInterface(static_cast<IGhostLoader *>(&m_GhostLoader), false);
