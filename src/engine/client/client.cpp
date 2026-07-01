@@ -3089,7 +3089,6 @@ void CClient::Update()
 
 void CClient::RegisterInterfaces()
 {
-	Kernel()->RegisterInterface(static_cast<IClient *>(this), false);
 	Kernel()->RegisterInterface(static_cast<IDemoPlayer *>(&m_DemoPlayer), false);
 	Kernel()->RegisterInterface(static_cast<IGhostRecorder *>(&m_GhostRecorder), false);
 	Kernel()->RegisterInterface(static_cast<IGhostLoader *>(&m_GhostLoader), false);
@@ -4858,8 +4857,8 @@ int main(int argc, const char **argv)
 	pClient->SetLoggers(pFutureFileLogger, std::move(pStdoutLogger));
 
 	IKernel *pKernel = IKernel::Create();
-	pKernel->RegisterInterface(pClient, false);
 	pClient->RegisterInterfaces();
+	pKernel->RegisterInterface(pClient, false);
 	CleanerFunctions.emplace([pKernel, pClient]() {
 		// Ensure that the assert handler doesn't use the client/graphics after they've been destroyed
 		dbg_assert_set_handler(nullptr);
